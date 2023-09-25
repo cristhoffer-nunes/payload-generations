@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { HttpModule } from '@nestjs/axios';
+import { OrderController } from './controller/order.controller';
+import { OracleService } from './services/oracle.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [HttpModule, ConfigModule.forRoot()],
+  controllers: [OrderController],
+  providers: [OracleService],
 })
 export class AppModule {}
