@@ -1,14 +1,20 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { GeneratePayloadDTO } from 'src/dto/generatePayload.dto';
 import { OracleService } from 'src/services/oracle.service';
+import { Logger } from '@nestjs/common';
 
 @Controller('/orders')
 export class OrderController {
-  constructor(private oracleService: OracleService) {}
+  private logger: Logger;
+  constructor(private oracleService: OracleService) {
+    this.logger = new Logger(OrderController.name);
+  }
 
   @Post()
   async generatePayload(@Body() { id }: GeneratePayloadDTO) {
     const orders = [];
+
+    this.logger.log(`${id}`);
 
     for (let i = 0; i < id.length; i++) {
       const data = await this.oracleService.getOrder(id[i]);
